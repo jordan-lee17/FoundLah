@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
             FoundLahTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
+//                        Testing
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
