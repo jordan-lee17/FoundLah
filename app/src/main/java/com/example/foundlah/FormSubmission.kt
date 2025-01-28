@@ -29,6 +29,8 @@ class FormSubmission : ComponentActivity() {
     private lateinit var uploadImageButton: Button
     private lateinit var openCameraButton: Button
     private lateinit var imagePreview: ImageView
+    private lateinit var noImageText: TextView
+
     private val IMAGE_PICK_CODE = 1000
     private val CAMERA_CAPTURE_CODE = 1001
     private val CAMERA_PERMISSION_CODE = 1002
@@ -43,8 +45,11 @@ class FormSubmission : ComponentActivity() {
             insets
         }
 
-
         val spinner = findViewById<Spinner>(R.id.spinner)
+        uploadImageButton = findViewById<Button>(R.id.uploadImageButton)
+        openCameraButton = findViewById<Button>(R.id.openCameraButton)
+        imagePreview = findViewById<ImageView>(R.id.imagePreview)
+        noImageText = findViewById<TextView>(R.id.noImageText)
 
         val categories = arrayOf("Category", "Phone", "Bottle", "Earpiece", "Charger", "Others")
         val arrayAdapter = object: ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories) {
@@ -80,10 +85,10 @@ class FormSubmission : ComponentActivity() {
                 id: Long
             ) {
                 if (position == 0) {
-
+                    (view as TextView).setTextColor(resources.getColor(android.R.color.darker_gray))
                 } else {
                     if (parent != null) {
-                        Toast.makeText(this@FormSubmission, "Item Selected: ${parent.getItemAtPosition(position)}", Toast.LENGTH_SHORT).show()
+                        (view as TextView).setTextColor(resources.getColor(android.R.color.black))
                     }
                 }
             }
@@ -92,10 +97,6 @@ class FormSubmission : ComponentActivity() {
                 TODO("Not yet implemented")
             }
         }
-
-        uploadImageButton = findViewById<Button>(R.id.uploadImageButton)
-        openCameraButton = findViewById<Button>(R.id.openCameraButton)
-        imagePreview = findViewById<ImageView>(R.id.imagePreview)
 
         uploadImageButton.setOnClickListener {
             pickImageFromGallery()
@@ -135,6 +136,7 @@ class FormSubmission : ComponentActivity() {
                     val imageUri: Uri? = data?.data
                     if (imageUri != null) {
                         imagePreview.setImageURI(imageUri)
+                        noImageText.visibility = TextView.GONE
                     } else {
                         Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
                     }
@@ -143,6 +145,7 @@ class FormSubmission : ComponentActivity() {
                     val bitmap: Bitmap? = data?.extras?.get("data") as? Bitmap
                     if (bitmap != null) {
                         imagePreview.setImageBitmap(bitmap)
+                        noImageText.visibility = TextView.GONE
                     } else {
                         Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show()
                     }
