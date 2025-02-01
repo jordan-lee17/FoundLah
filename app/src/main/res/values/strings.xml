@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">FoundLah!</string>
+    <string name="hint_email">Enter your email</string>
+    <string name="hint_password">Enter your password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_forgot_password">Forgot Password</string>
+    <string name="app_logo_description">App Logo</string>
+    <string name="lost_item_button">I Lost an item </string>
+    <string name="found_item_button">I found an item</string>
+    <string name="ongoing_applications_button">View ongoing applications</string>
+    <string name="settings_button">Settings</string>
+    <string name="profile_button">Profile</string>
+    <string name="Welcome_back">Welcome Back!</string>
 </resources>
