@@ -13,6 +13,24 @@
         android:theme="@style/Theme.FoundLah"
         tools:targetApi="31">
         <activity
+            android:name=".FoundSummary"
+            android:exported="false" />
+        <activity
+            android:name=".LostSummary"
+            android:exported="false" />
+        <activity
+            android:name=".LostUpload"
+            android:exported="false" />
+        <activity
+            android:name=".LostDesc"
+            android:exported="false" />
+        <activity
+            android:name=".FoundDesc"
+            android:exported="false" />
+        <activity
+            android:name=".FoundUpload"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
