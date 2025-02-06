@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#726b6b"
+    tools:context=".FollowupActivity">
+
+    <TextView
+        android:id="@+id/feedback"
+        android:layout_width="346dp"
+        android:layout_height="157dp"
+        android:layout_marginTop="48dp"
+        android:background="#d9d9d9"
+        android:gravity="center_vertical"
+        android:text="Has your mom told you that you lost an item today? Uh Ohhhhhhh!!!!!!"
+        android:textAlignment="center"
+        android:textSize="18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAccept"
+        android:layout_width="132dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="56dp"
+        android:text="Accept (Followup)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedback"
+        app:layout_constraintVertical_bias="0.032" />
+
+    <Button
+        android:id="@+id/buttonAccept2"
+        android:layout_width="132dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Reject
+                     (Close case)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/buttonAccept"
+        app:layout_constraintTop_toBottomOf="@+id/feedback"
+        app:layout_constraintVertical_bias="0.032" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
