@@ -24,17 +24,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Item Details -->
+
     <TextView
         android:id="@+id/itemText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp"
         android:text="Item: "
         android:textColor="#000000"
         android:textSize="16sp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/headerText"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingStart="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/headerText" />
 
     <TextView
         android:id="@+id/locationText"
@@ -88,6 +89,7 @@
         <!-- Placeholder Text -->
 
         <!-- ImageView for the photo -->
+
         <TextView
             android:id="@+id/photoPlaceholderText"
             android:layout_width="match_parent"
@@ -105,16 +107,5 @@
             android:visibility="gone"/>
 
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/categoriesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:text="Photo: "
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="259dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

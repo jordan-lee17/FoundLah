@@ -14,22 +14,22 @@
         tools:targetApi="31">
         <activity
             android:name=".FoundSummary"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".LostSummary"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".LostUpload"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".LostDesc"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".FoundDesc"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".FoundUpload"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
