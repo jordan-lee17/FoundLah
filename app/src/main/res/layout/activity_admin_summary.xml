@@ -16,7 +16,7 @@
         android:text="Feedback submitted to users XXX and YYY"
         android:textAlignment="center"
         android:textColor="#fdf7f7"
-        android:textSize="28"
+        android:textSize="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
