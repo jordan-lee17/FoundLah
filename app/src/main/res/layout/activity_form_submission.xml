@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="-131dp">
 
@@ -115,9 +115,10 @@
             <FrameLayout
                 android:id="@+id/frameLayout2"
                 android:layout_width="280dp"
-                android:layout_height="180dp"
+                android:layout_height="@dimen/fixed_frame_height"
                 android:layout_marginTop="35dp"
                 android:layout_gravity="center"
+                android:background="#ffffff"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +128,6 @@
                     android:id="@+id/imagePreview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#ffffff"
                     android:contentDescription="Image Preview"
                     android:scaleType="centerCrop"
                     tools:src="@tools:sample/avatars" />
@@ -183,7 +183,7 @@
             android:background="#000000"
             android:textColor="@color/white" />
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/nextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
