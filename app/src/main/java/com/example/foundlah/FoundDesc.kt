@@ -76,9 +76,10 @@ class FoundDesc : ComponentActivity() {
 
         // List of categories
         val categories = arrayOf("Category", "Phone", "Bottle", "Earpiece", "Charger", "Others")
-        val arrayAdapter = object: ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories) {
+        val arrayAdapter = object :
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories) {
             override fun isEnabled(position: Int): Boolean {
-                return position !=0
+                return position != 0
             }
 
             override fun getDropDownView(
@@ -101,7 +102,7 @@ class FoundDesc : ComponentActivity() {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = arrayAdapter
 
-        spinner.onItemSelectedListener= object: AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -131,7 +132,7 @@ class FoundDesc : ComponentActivity() {
             var selectedCategory = spinner.selectedItem.toString()
             val imageUriString = imageUri?.toString()
 
-            if(selectedCategory == "Category") {
+            if (selectedCategory == "Category") {
                 selectedCategory = ""
             }
             // Pass form data to summary page
@@ -191,32 +192,45 @@ class FoundDesc : ComponentActivity() {
     }
 
     private fun pickImageFromGallery() {
-        // Open gallery
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
     private fun openCamera() {
-        // Open camera if there is permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
-        } else {
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(cameraIntent, CAMERA_CAPTURE_CODE)
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, CAMERA_CAPTURE_CODE)
+            }
+
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_CODE
+                )
+            }
+
+            else -> {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_CODE
+                )
+            }
         }
     }
 
     private fun saveImage(bitmap: Bitmap): Uri? {
         val filesDir = applicationContext.filesDir
         val imageFile = File(filesDir, "captured_image.jpg")
-
         return try {
             val outputStream = FileOutputStream(imageFile)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
-            // Return the image URI
             Uri.fromFile(imageFile)
         } catch (e: IOException) {
             e.printStackTrace()
@@ -227,7 +241,6 @@ class FoundDesc : ComponentActivity() {
     private fun adjustFrameLayoutSize() {
         imagePreview.viewTreeObserver.addOnGlobalLayoutListener {
             if (imageUri != null) {
-                // Load image dimensions
                 val options = BitmapFactory.Options()
                 options.inJustDecodeBounds = true
                 val inputStream = contentResolver.openInputStream(imageUri!!)
@@ -238,58 +251,42 @@ class FoundDesc : ComponentActivity() {
                 val imageHeight = options.outHeight
 
                 if (imageWidth > 0 && imageHeight > 0) {
-                    // Get aspect ratio from image
                     val aspectRatio = imageHeight.toFloat() / imageWidth.toFloat()
-                    // Adjust height
                     val newHeight = (frameLayout.width * aspectRatio).toInt()
-
                     frameLayout.layoutParams.height = min(
                         newHeight,
                         resources.getDimensionPixelSize(R.dimen.max_frame_height)
                     )
-
                 }
             } else {
-                // Keep fixed height when no image
-                frameLayout.layoutParams.height = resources.getDimensionPixelSize(R.dimen.fixed_frame_height)
+                frameLayout.layoutParams.height =
+                    resources.getDimensionPixelSize(R.dimen.fixed_frame_height)
             }
-            // Apply height
             frameLayout.requestLayout()
         }
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-        caller: ComponentCaller
-    ) {
-        super.onActivityResult(requestCode, resultCode, data, caller)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            // Set images
             when (requestCode) {
                 IMAGE_PICK_CODE -> {
                     imageUri = data?.data
                     if (imageUri != null) {
                         imagePreview.setImageURI(imageUri)
-                        noImageText.visibility = TextView.GONE
-                        // Adjust frame layout size
+                        noImageText.visibility = View.GONE
                         adjustFrameLayoutSize()
-                    } else {
-                        Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
                     }
                 }
+
                 CAMERA_CAPTURE_CODE -> {
-                    val bitmap: Bitmap? = data?.extras?.get("data") as? Bitmap
+                    val bitmap = data?.extras?.get("data") as? Bitmap
                     if (bitmap != null) {
                         imageUri = saveImage(bitmap)
                         imagePreview.setImageBitmap(bitmap)
-                        noImageText.visibility = TextView.GONE
-                        // Adjust frame layout size
+                        noImageText.visibility = View.GONE
                         adjustFrameLayoutSize()
-                    } else {
-                        Toast.makeText(this, "Failed to capture image", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

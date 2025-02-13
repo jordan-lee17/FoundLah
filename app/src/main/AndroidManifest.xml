@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,16 +26,10 @@
             android:name=".LostSummary"
             android:exported="true" />
         <activity
-            android:name=".LostUpload"
-            android:exported="true" />
-        <activity
             android:name=".LostDesc"
             android:exported="true" />
         <activity
             android:name=".FoundDesc"
-            android:exported="true" />
-        <activity
-            android:name=".FoundUpload"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

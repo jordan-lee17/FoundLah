@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:background="#726B6B"
         android:fillViewport="true"
-        tools:context=".FormSubmission">
+        tools:context=".FoundDesc">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
-                android:text="Summary of lost item:"
+                android:text="Summary of found item:"
                 android:textColor="#FFFFFF"
                 android:textSize="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +162,7 @@
         android:orientation="horizontal"
         android:background="#ffffff">
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/foundSumBackButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -170,7 +170,7 @@
             android:background="#000000"
             android:textColor="@color/white" />
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/foundSumCancelButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -179,7 +179,7 @@
             android:textColor="@color/white"
             android:layout_marginStart="2dp"/>
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/foundSumSubmitButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

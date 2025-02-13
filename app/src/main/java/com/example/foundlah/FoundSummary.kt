@@ -61,9 +61,9 @@ class FoundSummary : ComponentActivity() {
             }
         }
 
-        val backButton = findViewById<Button>(R.id.backButton)
-        val cancelButton = findViewById<Button>(R.id.cancelButton)
-        val submitButton = findViewById<Button>(R.id.submitButton)
+        val backButton = findViewById<Button>(R.id.foundSumBackButton)
+        val cancelButton = findViewById<Button>(R.id.foundSumCancelButton)
+        val submitButton = findViewById<Button>(R.id.foundSumSubmitButton)
 
         backButton.setOnClickListener {
             finish()
