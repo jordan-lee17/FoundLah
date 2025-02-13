@@ -9,16 +9,20 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.content.Intent
 
-class ConvoListActivity : ComponentActivity() {
+class ChatActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_convo_list)
+        setContentView(R.layout.activity_chat)
 
-        val chatButton: Button = findViewById(R.id.button)
+        val backButton: Button = findViewById(R.id.backButton)
+        backButton.setOnClickListener{
+            finish()
+        }
 
-        chatButton.setOnClickListener{
-            val intent = Intent(this, ChatActivity::class.java)
+        val nextButton: Button = findViewById(R.id.nextButton)
+        nextButton.setOnClickListener{
+            val intent = Intent(this, FollowupActivity::class.java)
             startActivity(intent)
         }
 
@@ -28,4 +32,5 @@ class ConvoListActivity : ComponentActivity() {
             insets
         }
     }
+
 }
