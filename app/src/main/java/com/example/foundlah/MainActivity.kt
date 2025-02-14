@@ -54,4 +54,3 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
-
