@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.foundlah.ui.theme.FoundLahTheme
 
+import android.widget.Button
+
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +30,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+//        val testButton: Button = findViewById(R.id.testButton);
+//        val convoButton: Button = findViewById(R.id.convoButton);
+//        val followupButton: Button = findViewById(R.id.followupButton);
+//        val summaryButton: Button = findViewById(R.id.summaryButton);
+
     }
 }
 
@@ -45,5 +54,3 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
-
-// help

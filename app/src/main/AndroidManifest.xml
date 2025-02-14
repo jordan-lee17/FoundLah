@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,16 +28,47 @@
             android:exported="true" />
 
         <activity
+            android:name=".SummaryPage"
+            android:exported="true" />
+        <activity
+            android:name=".FormSubmission"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AdminSummaryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".FollowupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ConvoListActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".FoundSummary"
+            android:exported="true" />
+        <activity
+            android:name=".LostSummary"
+            android:exported="true" />
+        <activity
+            android:name=".LostDesc"
+            android:exported="true" />
+        <activity
+            android:name=".FoundDesc"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FoundLah" >
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
     </application>
 
