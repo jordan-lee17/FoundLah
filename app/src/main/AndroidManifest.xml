@@ -26,13 +26,6 @@
         <activity
             android:name=".Page1"
             android:exported="true" />
-
-        <activity
-            android:name=".SummaryPage"
-            android:exported="true" />
-        <activity
-            android:name=".FormSubmission"
-            android:exported="true" />
         <activity
             android:name=".ChatActivity"
             android:exported="true" />
@@ -45,7 +38,6 @@
         <activity
             android:name=".ConvoListActivity"
             android:exported="true" />
-
         <activity
             android:name=".FoundSummary"
             android:exported="true" />
@@ -53,10 +45,10 @@
             android:name=".LostSummary"
             android:exported="true" />
         <activity
-            android:name=".LostDesc"
+            android:name=".LostForm"
             android:exported="true" />
         <activity
-            android:name=".FoundDesc"
+            android:name=".FoundForm"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
