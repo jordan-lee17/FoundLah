@@ -1,8 +1,9 @@
 package com.example.foundlah
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Base64
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -15,11 +16,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import kotlin.math.min
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class FoundSummary : ComponentActivity() {
+    private lateinit var database: DatabaseReference
+
     private lateinit var imagePreview: ImageView
     private lateinit var noImageText: TextView
-    private var imageUri: Uri? = null
     private lateinit var frameLayout: FrameLayout
 
     @SuppressLint("SetTextI18n")
@@ -32,6 +36,10 @@ class FoundSummary : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // Initialise realtime database
+        database =
+            FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
+
         imagePreview = findViewById<ImageView>(R.id.imagePreview)
         noImageText = findViewById<TextView>(R.id.noImageText)
         frameLayout = findViewById(R.id.frameLayout2)
@@ -51,13 +59,11 @@ class FoundSummary : ComponentActivity() {
             location.text = "Location: ${itemData.location}"
             description.text = "Description: ${itemData.description}"
             imagePreview = findViewById<ImageView>(R.id.imagePreview)
-            if (!itemData.imageUri.isNullOrEmpty()) {
-                imageUri = Uri.parse(itemData.imageUri)
-                noImageText = findViewById<TextView>(R.id.noImageText)
-                imagePreview.setImageURI(imageUri)
+            if (!itemData?.imageBase64.isNullOrEmpty()) {
+                val decodedBitmap = base64ToBitmap(itemData.imageBase64!!)
+                imagePreview.setImageBitmap(decodedBitmap)
                 noImageText.visibility = TextView.GONE
-                // Adjust frame layout size
-                adjustFrameLayoutSize()
+                adjustFrameLayoutSize(itemData.imageBase64)
             }
         }
 
@@ -75,41 +81,54 @@ class FoundSummary : ComponentActivity() {
         }
 
         submitButton.setOnClickListener {
-            Toast.makeText(this, "submit.", Toast.LENGTH_SHORT).show()
+            if (itemData != null) {
+                uploadToFirebase(itemData)
+            }
         }
     }
 
-    private fun adjustFrameLayoutSize() {
-        imagePreview.viewTreeObserver.addOnGlobalLayoutListener {
-            if (imageUri != null) {
-                // Load image dimensions
-                val options = BitmapFactory.Options()
-                options.inJustDecodeBounds = true
-                val inputStream = contentResolver.openInputStream(imageUri!!)
-                BitmapFactory.decodeStream(inputStream, null, options)
-                inputStream?.close()
+    private fun uploadToFirebase(item: ItemData) {
+        // Generate unique ID
+        val itemId = database.child("found items").push().key
 
-                val imageWidth = options.outWidth
-                val imageHeight = options.outHeight
-
-                if (imageWidth > 0 && imageHeight > 0) {
-                    // Get aspect ratio from image
-                    val aspectRatio = imageHeight.toFloat() / imageWidth.toFloat()
-                    // Adjust height
-                    val newHeight = (frameLayout.width * aspectRatio).toInt()
-
-                    frameLayout.layoutParams.height = min(
-                        newHeight,
-                        resources.getDimensionPixelSize(R.dimen.max_frame_height)
-                    )
-
+        if (itemId != null) {
+            database.child("found items").child(itemId).setValue(item)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Form submitted successfully!", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                // Keep fixed height when no image
-                frameLayout.layoutParams.height = resources.getDimensionPixelSize(R.dimen.fixed_frame_height)
-            }
-            // Apply height
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun base64ToBitmap(base64String: String): Bitmap {
+        val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    }
+
+    private fun adjustFrameLayoutSize(base64String: String?) {
+        if (base64String.isNullOrEmpty()) {
+            frameLayout.layoutParams.height =
+                resources.getDimensionPixelSize(R.dimen.fixed_frame_height)
             frameLayout.requestLayout()
+            return
+        }
+
+        val bitmap = base64ToBitmap(base64String)
+
+        frameLayout.viewTreeObserver.addOnGlobalLayoutListener {
+            val frameWidth = frameLayout.width // ✅ Ensure width is measured
+            if (frameWidth > 0 && bitmap.width > 0 && bitmap.height > 0) {
+                val aspectRatio = bitmap.height.toFloat() / bitmap.width.toFloat()
+                val newHeight = (frameWidth * aspectRatio).toInt()
+
+                frameLayout.layoutParams.height = min(
+                    newHeight,
+                    resources.getDimensionPixelSize(R.dimen.max_frame_height)
+                )
+                frameLayout.requestLayout()
+            }
         }
     }
 }

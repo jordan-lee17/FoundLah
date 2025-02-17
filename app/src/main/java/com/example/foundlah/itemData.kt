@@ -9,9 +9,11 @@ data class ItemData(
     val date: String?,
     val location: String?,
     val description: String?,
-    val imageUri: String?
+    val imageBase64: String?,
+    val type: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -26,7 +28,8 @@ data class ItemData(
         parcel.writeString(date)
         parcel.writeString(location)
         parcel.writeString(description)
-        parcel.writeString(imageUri)
+        parcel.writeString(imageBase64)
+        parcel.writeString(type)
     }
 
     override fun describeContents(): Int = 0
