@@ -24,7 +24,10 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".Page1"
+            android:name=".Login"
+            android:exported="true" />
+        <activity
+            android:name=".CreateAccountActivity"
             android:exported="true" />
         <activity
             android:name=".ChatActivity"
