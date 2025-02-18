@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.icu.util.Calendar
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 import android.net.Uri
@@ -24,6 +25,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.DatePickerDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -31,6 +33,8 @@ import androidx.core.view.WindowInsetsCompat
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.math.min
 
 class FoundForm : ComponentActivity() {
@@ -46,6 +50,7 @@ class FoundForm : ComponentActivity() {
     private lateinit var date: EditText
     private lateinit var location: EditText
     private lateinit var description: EditText
+    private lateinit var dateError: TextView
 
     private val IMAGE_PICK_CODE = 1000
     private val CAMERA_CAPTURE_CODE = 1001
@@ -54,7 +59,7 @@ class FoundForm : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_found_desc)
+        setContentView(R.layout.activity_found_form)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -74,6 +79,7 @@ class FoundForm : ComponentActivity() {
         date = findViewById(R.id.foundDate)
         location = findViewById(R.id.foundItemLocation)
         description = findViewById(R.id.foundItemDescription)
+        dateError = findViewById(R.id.dateError)
 
         // List of categories
         val categories = arrayOf("Category", "Phone", "Bottle", "Earpiece", "Charger", "Others")
@@ -125,15 +131,34 @@ class FoundForm : ComponentActivity() {
             }
         }
 
+        date.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = android.app.DatePickerDialog(this,
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    val formattedDate = String.format(
+                        "%02d/%02d/%04d",
+                        selectedDay,
+                        selectedMonth + 1,
+                        selectedYear
+                    )
+                    date.setText(formattedDate) // ✅ Set selected date in EditText
+                },
+                year, month, day
+            )
+            datePickerDialog.show()
+        }
+
         cancelButton.setOnClickListener {
             Toast.makeText(this, "cancelled. Back to home page", Toast.LENGTH_SHORT).show()
         }
 
         nextButton.setOnClickListener {
-            var selectedCategory = spinner.selectedItem.toString()
-
-            if (selectedCategory == "Category") {
-                selectedCategory = ""
+            if (!validateForm()) {
+                return@setOnClickListener // ✅ Stop if validation fails
             }
 
             // Convert image to base64
@@ -146,7 +171,7 @@ class FoundForm : ComponentActivity() {
             // Pass form data to summary page
             val itemData = ItemData(
                 itemName.text.toString(),
-                selectedCategory,
+                spinner.selectedItem.toString(),
                 date.text.toString(),
                 location.text.toString(),
                 description.text.toString(),
@@ -199,6 +224,52 @@ class FoundForm : ComponentActivity() {
             // Adjust frame layout size
             adjustFrameLayoutSize()
         }
+    }
+
+    private fun validateForm(): Boolean {
+        var isValid = true
+
+        if (itemName.text.toString().trim().isEmpty()) {
+            itemName.error = "Item name is required"
+            isValid = false
+        }
+
+        if (spinner.selectedItem.toString() == "Category") {
+            Toast.makeText(this, "Please select a valid category", Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
+
+        if (date.text.toString().trim().isEmpty()) {
+            dateError.text = "Please select a date"
+            dateError.visibility = View.VISIBLE
+            isValid = false
+        } else if (isFutureDate(date.text.toString())) {
+            dateError.text = "Date cannot be in the future"
+            dateError.visibility = View.VISIBLE
+            isValid = false
+        } else {
+            dateError.visibility = View.GONE
+        }
+
+        if (location.text.toString().trim().isEmpty()) {
+            location.error = "Location is required"
+            isValid = false
+        }
+
+        if (description.text.toString().trim().isEmpty()) {
+            description.error = "Description is required"
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    private fun isFutureDate(dateString: String): Boolean {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val selectedDate = sdf.parse(dateString)
+        val currentDate = Calendar.getInstance().time
+
+        return selectedDate?.after(currentDate) == true // ✅ Returns true if selected date is in the future
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {

@@ -90,8 +90,18 @@ class LostSummary : ComponentActivity() {
         // Generate unique ID
         val itemId = database.child("lost items").push().key
 
+        val itemMap = mapOf(
+            "name" to item.name,
+            "category" to item.category,
+            "date" to item.date,
+            "location" to item.location,
+            "description" to item.description,
+            "imageBase64" to item.imageBase64,
+            "type" to item.type
+        )
+
         if (itemId != null) {
-            database.child("lost items").child(itemId).setValue(item)
+            database.child("lost items").child(itemId).setValue(itemMap)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Form submitted successfully!", Toast.LENGTH_SHORT).show()
                 }
