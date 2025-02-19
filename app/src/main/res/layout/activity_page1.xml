@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#726B6B"
+    android:background="#4Cb9ff"
     tools:context=".Page1">
 
 

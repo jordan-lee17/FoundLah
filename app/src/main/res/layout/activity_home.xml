@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#726B6B"
+    android:background="#87CEFA"
     tools:context=".HomeActivity">
 
     <Button
@@ -26,15 +26,15 @@
         android:id="@+id/button2"
         android:layout_width="273dp"
         android:layout_height="61dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/lost_item_button"
         android:textColor="@color/white"
-        android:background="@drawable/rounded_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.285"/>
+        app:layout_constraintVertical_bias="0.285" />
 
     <Button
         android:id="@+id/button3"
