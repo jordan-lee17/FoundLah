@@ -39,8 +39,7 @@ class FoundSummary : ComponentActivity() {
             insets
         }
         // Initialise realtime database
-        database =
-            FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
+        database = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
 
         imagePreview = findViewById<ImageView>(R.id.imagePreview)
         noImageText = findViewById<TextView>(R.id.noImageText)

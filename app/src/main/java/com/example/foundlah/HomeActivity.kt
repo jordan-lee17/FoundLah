@@ -32,5 +32,10 @@ class HomeActivity : ComponentActivity() {
             val intent = Intent(this, FoundForm::class.java)
             startActivity(intent)
         }
+
+        ongoingButton.setOnClickListener {
+            val intent = Intent(this, OngoingActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
