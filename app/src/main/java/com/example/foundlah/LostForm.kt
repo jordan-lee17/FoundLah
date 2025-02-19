@@ -145,7 +145,7 @@ class LostForm : ComponentActivity() {
                         selectedMonth + 1,
                         selectedYear
                     )
-                    date.setText(formattedDate) // ✅ Set selected date in EditText
+                    date.setText(formattedDate)
                 },
                 year, month, day
             )
@@ -158,7 +158,7 @@ class LostForm : ComponentActivity() {
 
         nextButton.setOnClickListener {
             if (!validateForm()) {
-                return@setOnClickListener // ✅ Stop if validation fails
+                return@setOnClickListener
             }
 
             // Convert image to base64
@@ -269,7 +269,7 @@ class LostForm : ComponentActivity() {
         val selectedDate = sdf.parse(dateString)
         val currentDate = Calendar.getInstance().time
 
-        return selectedDate?.after(currentDate) == true // ✅ Returns true if selected date is in the future
+        return selectedDate?.after(currentDate) == true
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {

@@ -1,6 +1,7 @@
 package com.example.foundlah
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -15,6 +16,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.min
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -77,7 +79,6 @@ class FoundSummary : ComponentActivity() {
 
         cancelButton.setOnClickListener {
             Toast.makeText(this, "cancelled. Back to home page", Toast.LENGTH_SHORT).show()
-
         }
 
         submitButton.setOnClickListener {
@@ -88,10 +89,14 @@ class FoundSummary : ComponentActivity() {
     }
 
     private fun uploadToFirebase(item: ItemData) {
+        // Get userID
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
         // Generate unique ID
         val itemId = database.child("found items").push().key
 
         val itemMap = mapOf(
+            "userId" to userId,
             "name" to item.name,
             "category" to item.category,
             "date" to item.date,
@@ -105,6 +110,9 @@ class FoundSummary : ComponentActivity() {
             database.child("found items").child(itemId).setValue(itemMap)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Form submitted successfully!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()

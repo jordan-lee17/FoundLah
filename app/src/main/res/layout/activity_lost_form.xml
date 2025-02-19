@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:background="#726B6B"
         android:fillViewport="true"
-        tools:context=".LostDesc">
+        tools:context=".LostForm">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
