@@ -11,6 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class Login : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
@@ -68,6 +70,7 @@ class Login : ComponentActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    storeFCMToken()
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
@@ -76,4 +79,23 @@ class Login : ComponentActivity() {
                 }
             }
     }
+
+    fun storeFCMToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                println("FCM Token retrieval failed: ${task.exception}")
+                return@addOnCompleteListener
+            }
+
+            val token = task.result
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@addOnCompleteListener
+
+            // Store token under userId in Firebase Realtime Database
+            val database = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
+            database.child("users").child(userId).child("fcmToken").setValue(token)
+                .addOnSuccessListener { println("Token saved successfully") }
+                .addOnFailureListener { println("Failed to save token: ${it.message}") }
+        }
+    }
+
 }

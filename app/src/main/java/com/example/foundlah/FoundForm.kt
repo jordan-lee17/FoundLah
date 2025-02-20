@@ -110,26 +110,26 @@ class FoundForm : ComponentActivity() {
         spinner.adapter = arrayAdapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
+                val textView = view as? TextView ?: return
+
                 if (position == 0) {
-                    (view as TextView).setTextColor(resources.getColor(android.R.color.darker_gray))
+                    textView.setTextColor(resources.getColor(android.R.color.darker_gray))
                 } else {
-                    if (parent != null) {
-                        (view as TextView).setTextColor(resources.getColor(android.R.color.black))
-                    }
+                    textView.setTextColor(resources.getColor(android.R.color.black))
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
             }
         }
+
 
         date.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -181,6 +181,7 @@ class FoundForm : ComponentActivity() {
 
             val intent = Intent(this, FoundSummary::class.java)
             intent.putExtra("itemData", itemData)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
         }
 
