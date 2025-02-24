@@ -27,23 +27,23 @@ import kotlin.math.min
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.io.File
-import java.io.FileInputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class FoundSummary : ComponentActivity() {
+class SummaryActivity : ComponentActivity() {
     private lateinit var database: DatabaseReference
 
     private lateinit var imagePreview: ImageView
     private lateinit var noImageText: TextView
     private lateinit var frameLayout: FrameLayout
+    private lateinit var summaryHeader: TextView
+    private lateinit var formType: String
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_found_summary)
+        setContentView(R.layout.activity_summary)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -55,6 +55,7 @@ class FoundSummary : ComponentActivity() {
         imagePreview = findViewById<ImageView>(R.id.imagePreview)
         noImageText = findViewById<TextView>(R.id.noImageText)
         frameLayout = findViewById(R.id.frameLayout2)
+        summaryHeader = findViewById(R.id.summaryTextView)
 
         val name = findViewById<TextView>(R.id.itemTextView)
         var category = findViewById<TextView>(R.id.categoryTextView)
@@ -65,6 +66,8 @@ class FoundSummary : ComponentActivity() {
         val itemData: ItemData? = intent.getParcelableExtra("itemData")
 
         if (itemData != null) {
+            formType = itemData.type.toString()
+            summaryHeader.text = "Summary of ${itemData.type} item"
             name.text = "Item: ${itemData.name}"
             category.text = "Category: ${itemData.category}"
             date.text = "Date: ${itemData.date}"
@@ -103,7 +106,7 @@ class FoundSummary : ComponentActivity() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         // Generate unique ID
-        val itemId = database.child("found items").push().key
+        val itemId = database.child("${formType} items").push().key
 
         val itemMap = mapOf(
             "userId" to userId,
@@ -117,7 +120,7 @@ class FoundSummary : ComponentActivity() {
         )
 
         if (itemId != null) {
-            database.child("found items").child(itemId).setValue(itemMap)
+            database.child("${formType} items").child(itemId).setValue(itemMap)
                 .addOnSuccessListener {
                     checkMatches(item, itemId) {
                         runOnUiThread {
@@ -166,7 +169,13 @@ class FoundSummary : ComponentActivity() {
     }
 
     private fun checkMatches(submittedItem: ItemData, submittedId: String, onComplete: () -> Unit) {
-        database.child("lost items").addListenerForSingleValueEvent(object : ValueEventListener {
+        val oppositeFormType: String
+        if (formType == "found") {
+            oppositeFormType = "lost"
+        } else {
+            oppositeFormType = "found"
+        }
+        database.child("${oppositeFormType} items").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val matches = mutableListOf<Triple<String?, String, Int>>()
 
@@ -226,6 +235,11 @@ class FoundSummary : ComponentActivity() {
         }
         // Similar name
         if (submittedItem.name.orEmpty().contains(item2.name.orEmpty(), ignoreCase = true) || item2.name.orEmpty().contains(submittedItem.name.orEmpty(), ignoreCase = true)) {
+            score += 20
+        }
+
+        // Similar description
+        if (submittedItem.description.orEmpty().contains(item2.description.orEmpty(), ignoreCase = true) || item2.description.orEmpty().contains(submittedItem.description.orEmpty(), ignoreCase = true)) {
             score += 20
         }
 
@@ -293,7 +307,7 @@ class FoundSummary : ComponentActivity() {
                     }
                 }
 
-                Volley.newRequestQueue(this@FoundSummary).add(request)
+                Volley.newRequestQueue(this@SummaryActivity).add(request)
             } else {
                 println("FCM Token not found for user: ${matchedUserId}")
             }

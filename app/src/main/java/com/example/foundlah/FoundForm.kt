@@ -25,7 +25,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.DatePickerDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -179,7 +178,7 @@ class FoundForm : ComponentActivity() {
                 "found"
             )
 
-            val intent = Intent(this, FoundSummary::class.java)
+            val intent = Intent(this, SummaryActivity::class.java)
             intent.putExtra("itemData", itemData)
             intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
