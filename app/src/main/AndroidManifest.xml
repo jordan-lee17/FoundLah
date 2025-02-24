@@ -20,6 +20,12 @@
         android:theme="@style/Theme.FoundLah"
         tools:targetApi="31">
         <activity
+            android:name=".MatchedItemDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".OngoingActivity"
             android:exported="true" />
         <activity
@@ -62,8 +68,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.FoundLah">
-        </activity>
+            android:theme="@style/Theme.FoundLah" />
     </application>
 
 </manifest>

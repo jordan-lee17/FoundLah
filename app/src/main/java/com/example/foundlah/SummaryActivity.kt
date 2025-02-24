@@ -210,7 +210,7 @@ class SummaryActivity : ComponentActivity() {
 
         // Category check
         if (submittedItem.category == item2.category){
-            score += 30
+            score += 20
         }
         // Location check
         if (submittedItem.location == item2.location) {
@@ -240,7 +240,7 @@ class SummaryActivity : ComponentActivity() {
 
         // Similar description
         if (submittedItem.description.orEmpty().contains(item2.description.orEmpty(), ignoreCase = true) || item2.description.orEmpty().contains(submittedItem.description.orEmpty(), ignoreCase = true)) {
-            score += 20
+            score += 10
         }
 
         return score
