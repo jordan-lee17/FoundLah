@@ -66,8 +66,8 @@ class FoundForm : ComponentActivity() {
         }
 
         spinner = findViewById<Spinner>(R.id.spinner)
-        val cancelButton = findViewById<Button>(R.id.foundDescCancelButton)
-        val nextButton = findViewById<Button>(R.id.foundDescNextButton)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
+        val nextButton = findViewById<Button>(R.id.nextButton)
         uploadImageButton = findViewById<Button>(R.id.uploadImageButton)
         openCameraButton = findViewById<Button>(R.id.openCameraButton)
         imagePreview = findViewById<ImageView>(R.id.imagePreview)
@@ -152,7 +152,7 @@ class FoundForm : ComponentActivity() {
         }
 
         cancelButton.setOnClickListener {
-            Toast.makeText(this, "cancelled. Back to home page", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         nextButton.setOnClickListener {

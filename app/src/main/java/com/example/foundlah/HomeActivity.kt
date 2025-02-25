@@ -3,6 +3,7 @@ package com.example.foundlah
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
@@ -22,6 +23,8 @@ class HomeActivity : ComponentActivity() {
         val lostButton = findViewById<Button>(R.id.lostButton)
         val foundButton = findViewById<Button>(R.id.foundButton)
         val ongoingButton = findViewById<Button>(R.id.ongoingButton)
+        val settingsButton = findViewById<Button>(R.id.settingsButton)
+        val profileButton = findViewById<Button>(R.id.profileButton)
 
         lostButton.setOnClickListener {
             val intent = Intent(this, LostForm::class.java)
@@ -36,6 +39,14 @@ class HomeActivity : ComponentActivity() {
         ongoingButton.setOnClickListener {
             val intent = Intent(this, OngoingActivity::class.java)
             startActivity(intent)
+        }
+
+        settingsButton.setOnClickListener {
+            Toast.makeText(this, "Settings button clicked", Toast.LENGTH_SHORT).show()
+        }
+
+        profileButton.setOnClickListener {
+            Toast.makeText(this, "Settings button clicked", Toast.LENGTH_SHORT).show()
         }
     }
 }

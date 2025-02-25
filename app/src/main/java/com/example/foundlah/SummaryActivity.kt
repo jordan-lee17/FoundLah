@@ -52,8 +52,8 @@ class SummaryActivity : ComponentActivity() {
         // Initialise realtime database
         database = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
 
-        imagePreview = findViewById<ImageView>(R.id.imagePreview)
-        noImageText = findViewById<TextView>(R.id.noImageText)
+        imagePreview = findViewById(R.id.imagePreview)
+        noImageText = findViewById(R.id.noImageText)
         frameLayout = findViewById(R.id.frameLayout2)
         summaryHeader = findViewById(R.id.summaryTextView)
 
@@ -82,16 +82,19 @@ class SummaryActivity : ComponentActivity() {
             }
         }
 
-        val backButton = findViewById<Button>(R.id.foundSumBackButton)
-        val cancelButton = findViewById<Button>(R.id.foundSumCancelButton)
-        val submitButton = findViewById<Button>(R.id.foundSumSubmitButton)
+        val backButton = findViewById<Button>(R.id.backButton)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
+        val submitButton = findViewById<Button>(R.id.submitButton)
 
         backButton.setOnClickListener {
             finish()
         }
 
         cancelButton.setOnClickListener {
-            Toast.makeText(this, "cancelled. Back to home page", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
         submitButton.setOnClickListener {
