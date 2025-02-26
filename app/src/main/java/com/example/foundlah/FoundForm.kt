@@ -25,7 +25,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.DatePickerDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -67,8 +66,8 @@ class FoundForm : ComponentActivity() {
         }
 
         spinner = findViewById<Spinner>(R.id.spinner)
-        val cancelButton = findViewById<Button>(R.id.foundDescCancelButton)
-        val nextButton = findViewById<Button>(R.id.foundDescNextButton)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
+        val nextButton = findViewById<Button>(R.id.nextButton)
         uploadImageButton = findViewById<Button>(R.id.uploadImageButton)
         openCameraButton = findViewById<Button>(R.id.openCameraButton)
         imagePreview = findViewById<ImageView>(R.id.imagePreview)
@@ -110,26 +109,26 @@ class FoundForm : ComponentActivity() {
         spinner.adapter = arrayAdapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
+                val textView = view as? TextView ?: return
+
                 if (position == 0) {
-                    (view as TextView).setTextColor(resources.getColor(android.R.color.darker_gray))
+                    textView.setTextColor(resources.getColor(android.R.color.darker_gray))
                 } else {
-                    if (parent != null) {
-                        (view as TextView).setTextColor(resources.getColor(android.R.color.black))
-                    }
+                    textView.setTextColor(resources.getColor(android.R.color.black))
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
             }
         }
+
 
         date.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -153,7 +152,7 @@ class FoundForm : ComponentActivity() {
         }
 
         cancelButton.setOnClickListener {
-            Toast.makeText(this, "cancelled. Back to home page", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         nextButton.setOnClickListener {
@@ -179,8 +178,9 @@ class FoundForm : ComponentActivity() {
                 "found"
             )
 
-            val intent = Intent(this, FoundSummary::class.java)
+            val intent = Intent(this, SummaryActivity::class.java)
             intent.putExtra("itemData", itemData)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
         }
 

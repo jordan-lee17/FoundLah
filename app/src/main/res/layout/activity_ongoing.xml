@@ -12,15 +12,14 @@
         android:layout_weight="1"
         android:background="#726B6B"
         android:fillViewport="true"
-        tools:context=".LostForm">
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".OngoingActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/skybackground"
-            tools:context=".OngoingActivity">
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="-131dp">
 
             <TextView
                 android:id="@+id/ongoing"
@@ -33,19 +32,6 @@
                 android:layout_marginLeft="40dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/alerts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Alerts:"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="40dp"
-                app:layout_constraintHorizontal_bias="0.12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ongoing"/>
 
             <TextView
                 android:id="@+id/ongoing_no"
@@ -61,20 +47,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/alerts_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="420"
-                android:textColor="#ff4534"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toEndOf="@+id/alerts"
-                app:layout_constraintTop_toBottomOf="@id/ongoing_no"
-                app:layout_constraintVertical_bias="0.081" />
-
-            <TextView
                 android:id="@+id/lost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,9 +56,9 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="40dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alerts" />
+                app:layout_constraintTop_toBottomOf="@+id/ongoing" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lostItemContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,7 +80,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lostItemContainer" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/foundItemContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,8 +103,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#000000"
+            android:background="@color/black"
             android:text="Back"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"  />
     </LinearLayout>
 </LinearLayout>

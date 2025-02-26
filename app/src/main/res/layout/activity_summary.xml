@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fillViewport="true"
-        tools:context=".FoundSummary">
+        tools:context=".SummaryActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
@@ -180,7 +180,7 @@
         android:orientation="horizontal"
         android:background="#ffffff">
         <Button
-            android:id="@+id/foundSumBackButton"
+            android:id="@+id/backButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -188,7 +188,7 @@
             android:background="#000000"
             android:textColor="@color/white" />
         <Button
-            android:id="@+id/foundSumCancelButton"
+            android:id="@+id/cancelButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -197,7 +197,7 @@
             android:textColor="@color/white"
             android:layout_marginStart="2dp"/>
         <Button
-            android:id="@+id/foundSumSubmitButton"
+            android:id="@+id/submitButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

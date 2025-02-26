@@ -29,7 +29,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import org.w3c.dom.Text
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -67,8 +66,8 @@ class LostForm : ComponentActivity() {
         }
 
         spinner = findViewById(R.id.spinner)
-        val cancelButton = findViewById<Button>(R.id.lostDescCancelButton)
-        val nextButton = findViewById<Button>(R.id.lostDescNextButton)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
+        val nextButton = findViewById<Button>(R.id.nextButton)
         uploadImageButton = findViewById(R.id.uploadImageButton)
         openCameraButton = findViewById(R.id.openCameraButton)
         imagePreview = findViewById(R.id.imagePreview)
@@ -110,24 +109,22 @@ class LostForm : ComponentActivity() {
         spinner.adapter = arrayAdapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
+                val textView = view as? TextView ?: return
+
                 if (position == 0) {
-                    (view as TextView).setTextColor(resources.getColor(android.R.color.darker_gray))
+                    textView.setTextColor(resources.getColor(android.R.color.darker_gray))
                 } else {
-                    if (parent != null) {
-                        (view as TextView).setTextColor(resources.getColor(android.R.color.black))
-                    }
+                    textView.setTextColor(resources.getColor(android.R.color.black))
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
             }
         }
 
@@ -153,7 +150,7 @@ class LostForm : ComponentActivity() {
         }
 
         cancelButton.setOnClickListener {
-            Toast.makeText(this, "cancelled. Back to home page", Toast.LENGTH_SHORT).show()
+           finish()
         }
 
         nextButton.setOnClickListener {
@@ -179,8 +176,9 @@ class LostForm : ComponentActivity() {
                 "lost"
             )
 
-            val intent = Intent(this, LostSummary::class.java)
+            val intent = Intent(this, SummaryActivity::class.java)
             intent.putExtra("itemData", itemData)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
         }
 

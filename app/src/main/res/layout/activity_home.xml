@@ -101,9 +101,10 @@
             app:layout_constraintVertical_bias="0.548" />
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="195dp"
-            android:layout_height="69dp"
+            android:id="@+id/settingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/settings_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,9 +114,10 @@
             app:layout_constraintVertical_bias="0.992" />
 
         <Button
-            android:id="@+id/button5"
-            android:layout_width="195dp"
-            android:layout_height="69dp"
+            android:id="@+id/profileButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/profile_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
