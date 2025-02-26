@@ -18,7 +18,7 @@
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#726B6B">
+            android:background="@drawable/skybackground">
 
             <ImageView
                 android:id="@+id/imageLogo"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="40dp"
-                android:background="@android:color/white"
+                android:background="@color/semi_transparent2"
                 android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="24dp"

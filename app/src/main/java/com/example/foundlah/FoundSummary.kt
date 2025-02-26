@@ -1,12 +1,13 @@
 package com.example.foundlah
-
+import android.animation.ObjectAnimator
+import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
-import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -27,6 +28,9 @@ class FoundSummary : ComponentActivity() {
     private lateinit var imagePreview: ImageView
     private lateinit var noImageText: TextView
     private lateinit var frameLayout: FrameLayout
+    private lateinit var summaryTextView: TextView
+    private lateinit var detailsContainer: View
+    private lateinit var photoTextView: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +42,11 @@ class FoundSummary : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        summaryTextView = findViewById(R.id.summaryTextView)
+        detailsContainer = findViewById(R.id.detailsContainer)
+        photoTextView = findViewById(R.id.photoTextView)
+
         // Initialise realtime database
         database = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
 
@@ -59,6 +68,7 @@ class FoundSummary : ComponentActivity() {
             date.text = "Date: ${itemData.date}"
             location.text = "Location: ${itemData.location}"
             description.text = "Description: ${itemData.description}"
+
             imagePreview = findViewById<ImageView>(R.id.imagePreview)
             if (!itemData?.imageBase64.isNullOrEmpty()) {
                 val decodedBitmap = base64ToBitmap(itemData.imageBase64!!)
@@ -85,6 +95,31 @@ class FoundSummary : ComponentActivity() {
                 uploadToFirebase(itemData)
             }
         }
+
+        summaryTextView.alpha = 0f
+        detailsContainer.alpha = 0f
+        photoTextView.alpha = 0f
+        frameLayout.alpha = 0f
+
+        playFadeInAnimations()
+    }
+
+    private fun playFadeInAnimations() {
+        fun fadeIn(view: View, delay: Long):ObjectAnimator {
+            return ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+                duration = 1000
+                startDelay = delay
+            }
+        }
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playSequentially(
+            fadeIn(summaryTextView, 500),
+            fadeIn(detailsContainer, 1000),
+            fadeIn(photoTextView, 1500),
+            fadeIn(frameLayout, 2000)
+        )
+        animatorSet.start()
     }
 
     private fun uploadToFirebase(item: ItemData) {

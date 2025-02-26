@@ -4,108 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#726B6B"
-        android:fillViewport="true"
-        tools:context=".HomeActivity">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main"
-            android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/skybackground">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimation"
+            android:layout_width="242dp"
+            android:layout_height="227dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.111"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/welcome" />
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="-131dp">
+            android:alpha="0"
+            android:text="@string/welcome_user"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.439" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="181dp"
-                android:layout_height="wrap_content"
-                android:text="@string/Welcome_back"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginTop="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.308"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcomeText">
 
-            <Button
-                android:id="@+id/lostButton"
-                android:layout_width="273dp"
-                android:layout_height="61dp"
-                android:text="@string/lost_item_button"
-                android:textColor="@color/white"
-                android:background="@drawable/rounded_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView"
-                app:layout_constraintBottom_toTopOf="@id/foundButton"/>
-
-            <Button
-                android:id="@+id/foundButton"
-                android:layout_width="278dp"
-                android:layout_height="59dp"
-                android:background="@drawable/rounded_button"
-                android:text="@string/found_item_button"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lostButton"
-                app:layout_constraintBottom_toTopOf="@id/ongoingButton"/>
-
-            <Button
-                android:id="@+id/ongoingButton"
-                android:layout_width="278dp"
-                android:layout_height="59dp"
-                android:text="@string/ongoing_applications_button"
-                android:textColor="@color/white"
-                android:background="@drawable/rounded_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foundButton"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        </LinearLayout>
 
         <Button
-            android:id="@+id/settingsButton"
-            android:layout_width="201dp"
-            android:layout_height="53dp"
-            android:background="@color/black"
+            android:id="@+id/foundButton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:visibility="invisible"
+            android:background="@drawable/rounded_button"
+            android:text="@string/found_item_button"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.679" />
+
+        <Button
+            android:id="@+id/ongoingButton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:visibility="invisible"
+            android:background="@drawable/rounded_button"
+            android:text="@string/ongoing_applications_button"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.824" />
+
+        <Button
+            android:id="@+id/lostButton"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:visibility="invisible"
+            android:background="@drawable/rounded_button"
+            android:text="@string/lost_item_button"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.548" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="195dp"
+            android:layout_height="69dp"
             android:text="@string/settings_button"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.049"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.997"/>
+            app:layout_constraintVertical_bias="0.992" />
 
         <Button
-            android:id="@+id/profileButton"
-            android:layout_width="209dp"
-            android:layout_height="53dp"
-            android:background="@color/black"
+            android:id="@+id/button5"
+            android:layout_width="195dp"
+            android:layout_height="69dp"
             android:text="@string/profile_button"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.997"/>
-    </LinearLayout>
+            app:layout_constraintVertical_bias="0.992" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

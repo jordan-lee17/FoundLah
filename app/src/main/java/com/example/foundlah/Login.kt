@@ -1,10 +1,14 @@
 package com.example.foundlah
 
+import android.animation.ObjectAnimator
+import android.animation.AnimatorSet
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.LinearInterpolator
 import androidx.activity.ComponentActivity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -32,12 +36,15 @@ class Login : ComponentActivity() {
         passwordField = findViewById(R.id.editTextTextPassword)
         val loginButton = findViewById<Button>(R.id.button)
         val createAccount = findViewById<TextView>(R.id.textCreateAccount)
+        val background = findViewById<ImageView>(R.id.backgroundImage)
+        animateBackground(background)
+
 
         loginButton.setOnClickListener {
             val email = emailField.text.toString().trim()
             val password = passwordField.text.toString().trim()
 
-            if(validateForm(email, password)) {
+            if (validateForm(email, password)) {
                 loginUser(email, password)
             }
         }
@@ -51,12 +58,12 @@ class Login : ComponentActivity() {
     private fun validateForm(email: String, password: String): Boolean {
         var isValid = true
 
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             emailField.error = "Please enter email"
             isValid = false
         }
 
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             passwordField.error = "Please enter password"
             isValid = false
         }
@@ -69,11 +76,46 @@ class Login : ComponentActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.putExtra("USER_EMAIL", email)
+                    startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(this, "Invalid login details", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+    //animate background
+    private fun animateBackground(background: ImageView) {
+        val scaleAnimatorX = ObjectAnimator.ofFloat(background, "scaleX", 1.0f, 1.1f).apply {
+            duration = 15000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+            interpolator = LinearInterpolator()
+        }
+
+        val scaleAnimatorY = ObjectAnimator.ofFloat(background, "scaleY", 1.0f, 1.1f).apply {
+            duration = 15000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+            interpolator = LinearInterpolator()
+        }
+
+        val translateAnimator =
+            ObjectAnimator.ofFloat(background, "translationY", 0f, -100f).apply {
+                duration = 15000
+                repeatCount = ObjectAnimator.INFINITE
+                repeatMode = ObjectAnimator.REVERSE
+                interpolator = LinearInterpolator()
+            }
+
+        // Start animations together
+        AnimatorSet().apply {
+            playTogether(scaleAnimatorX, scaleAnimatorY, translateAnimator)
+            start()
+        }
+    }
 }
+
+

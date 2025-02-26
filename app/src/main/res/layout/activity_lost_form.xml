@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#726B6B"
         android:fillViewport="true"
         tools:context=".LostForm">
 
@@ -18,6 +17,7 @@
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/skybackground"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="-131dp">
 
@@ -26,9 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
-                android:text="Lost Form"
+                android:text="Please key in details of your lost item"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -39,8 +39,7 @@
                 android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="50dp"
-                android:background="#383636"
+                android:background="@color/semi_transparent"
                 android:elevation="4dp"
                 android:orientation="vertical"
                 android:padding="16dp"
@@ -84,7 +83,7 @@
                     android:clickable="true"
                     android:ems="10"
                     android:focusable="false"
-                    android:hint="Select Date Lost"
+                    android:hint="Select Lost Date"
                     android:inputType="none"
                     android:paddingLeft="7dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +98,7 @@
                     android:layout_gravity="center"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="14sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/lostItemLocation"
@@ -109,7 +108,7 @@
                     android:layout_marginTop="35dp"
                     android:background="@drawable/rounded_edittext"
                     android:ems="10"
-                    android:hint="Location"
+                    android:hint="Set Location"
                     android:inputType="text"
                     android:paddingLeft="7dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -128,69 +127,66 @@
                     android:gravity="start|top"
                     android:hint="Enter description of item here"
                     android:inputType="textMultiLine"
-                    android:paddingLeft="7dp"
                     android:paddingVertical="10dp"
+                    android:paddingLeft="7dp"
                     android:scrollbars="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/location" />
+
+
+                <FrameLayout
+                    android:id="@+id/frameLayout2"
+                    android:layout_width="280dp"
+                    android:layout_height="@dimen/fixed_frame_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="35dp"
+                    android:background="#ffffff"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.502"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                    <ImageView
+                        android:id="@+id/imagePreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Image Preview"
+                        android:scaleType="centerCrop"
+                        tools:src="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/noImageText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="No image uploaded"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </FrameLayout>
+                    <Button
+                        android:id="@+id/uploadImageButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Upload Image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"/>
+
+                    <Button
+                        android:id="@+id/openCameraButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Open Camera"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/uploadImageButton"/>
             </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/frameLayout2"
-                android:layout_width="280dp"
-                android:layout_height="@dimen/fixed_frame_height"
-                android:layout_gravity="center"
-                android:layout_marginTop="35dp"
-                android:background="#ffffff"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-                <ImageView
-                    android:id="@+id/imagePreview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="Image Preview"
-                    android:scaleType="centerCrop"
-                    tools:src="@tools:sample/avatars" />
-
-                <TextView
-                    android:id="@+id/noImageText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="No image uploaded"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
-            </FrameLayout>
-
-            <Button
-                android:id="@+id/uploadImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginBottom="20dp"
-                android:text="Upload Image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
-
-            <Button
-                android:id="@+id/openCameraButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="20dp"
-                android:text="Open Camera"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
