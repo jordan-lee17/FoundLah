@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ItemAdapter(
     private val context: Context,
@@ -19,6 +23,7 @@ class ItemAdapter(
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
         val itemDate: TextView = itemView.findViewById(R.id.itemDate)
+        val matchBadge: TextView = itemView.findViewById(R.id.matchBadge)
     }
 
     inner class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -45,17 +50,22 @@ class ItemAdapter(
 
             if (itemData != null) {
                 holder.itemName.text = itemData.name
-            }
-            if (itemData != null) {
                 holder.itemDate.text = itemData.date
+
+                checkForMatches(itemId) { matchCount ->
+                    if (matchCount > 0) {
+                        holder.matchBadge.text = matchCount.toString() // Set match count
+                        holder.matchBadge.visibility = View.VISIBLE
+                    } else {
+                        holder.matchBadge.visibility = View.GONE
+                    }
+                }
             }
 
             // Set Click Listener to Open ItemDetailsActivity
             holder.itemView.setOnClickListener {
-                if (itemId != null) {
-                    if (itemData != null) {
+                if (itemId != null && itemData != null) {
                         onItemClick(itemId, itemData)
-                    }
                 }
             }
         } else if (holder is EmptyViewHolder) {
@@ -64,4 +74,39 @@ class ItemAdapter(
     }
 
     override fun getItemCount(): Int = itemList.size
+
+    private fun checkForMatches(itemId: String?, callback: (Int) -> Unit) {
+        if (itemId == null) {
+            callback(0)
+            return
+        }
+
+        val matchesRef = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference.child("matches")
+        var matchCount = 0
+
+        // Check for submittedItemId matches
+        matchesRef.orderByChild("submittedItemId").equalTo(itemId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    matchCount += snapshot.childrenCount.toInt()
+
+                    // Check for matchedItemId matches
+                    matchesRef.orderByChild("matchedItemId").equalTo(itemId)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                matchCount += snapshot.childrenCount.toInt()
+                                callback(matchCount) // Return final count
+                            }
+                            override fun onCancelled(error: DatabaseError) {
+                                callback(matchCount)
+                            }
+                        })
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback(0)
+                }
+            })
+    }
+
 }

@@ -25,6 +25,19 @@
         android:gravity="center"/>
 
     <TextView
+        android:id="@+id/matchBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/badge_background"
+        android:visibility="gone"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/itemName"
+        app:layout_constraintBottom_toBottomOf="@id/itemName"/>
+
+    <TextView
         android:id="@+id/itemDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

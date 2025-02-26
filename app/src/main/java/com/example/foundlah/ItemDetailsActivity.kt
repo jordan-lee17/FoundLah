@@ -45,8 +45,8 @@ class ItemDetailsActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
         potentialMatchesLayout = findViewById(R.id.potentialMatchesContainer)
 
-        imagePreview = findViewById<ImageView>(R.id.imagePreview)
-        noImageText = findViewById<TextView>(R.id.noImageText)
+        imagePreview = findViewById(R.id.imagePreview)
+        noImageText = findViewById(R.id.noImageText)
         frameLayout = findViewById(R.id.frameLayout2)
 
         val name = findViewById<TextView>(R.id.itemTextView)
@@ -85,40 +85,75 @@ class ItemDetailsActivity : AppCompatActivity() {
     }
 
     private fun fetchPotentialMatches(itemId: String, type: String?) {
+        potentialMatchesLayout.removeAllViews()
+
+        var matchesFound = false
+        var queriesCompleted = 0
+
+        // Checks if both queries are done
+        fun checkCompletion() {
+            queriesCompleted++
+            if (queriesCompleted == 2 && !matchesFound) {
+                val noMatchText = TextView(this@ItemDetailsActivity).apply {
+                    text = "No matches found."
+                    textSize = 30f
+                    setTextColor(ContextCompat.getColor(this@ItemDetailsActivity, android.R.color.holo_red_dark))
+                    gravity = Gravity.CENTER
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        gravity = Gravity.CENTER
+                        setMargins(20, 50, 20, 50)
+                    }
+                }
+                potentialMatchesLayout.addView(noMatchText)
+            }
+        }
+
+        // Query matches where the report is the submitted item
         database.child("matches").orderByChild("submittedItemId").equalTo(itemId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    potentialMatchesLayout.removeAllViews()
-
-                    if (!snapshot.exists()) {
-                        val noMatchText = TextView(this@ItemDetailsActivity).apply {
-                            text = "No matches found."
-                            textSize = 30f
-                            setTextColor(ContextCompat.getColor(this@ItemDetailsActivity, android.R.color.holo_red_dark))
-                            gravity = Gravity.CENTER
-                            layoutParams = LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT
-                            ).apply {
-                                gravity = Gravity.CENTER
-                                setMargins(20, 50, 20, 50)
+                    if (snapshot.exists()) {
+                        matchesFound = true
+                        for (itemSnapshot in snapshot.children) {
+                            val matchedItemId = itemSnapshot.child("matchedItemId").getValue(String::class.java)
+                            val matchScore = itemSnapshot.child("score").getValue(Int::class.java) ?: 0
+                            if (matchedItemId != null) {
+                                fetchMatchedItemDetails(matchedItemId, matchScore, type)
                             }
                         }
-                        potentialMatchesLayout.addView(noMatchText)
-                        return
                     }
-
-                    for (itemSnapshot in snapshot.children) {
-                        val matchedItemId = itemSnapshot.child("matchedItemId").getValue(String::class.java)
-                        val matchScore = itemSnapshot.child("score").getValue(Int::class.java) ?: 0
-                        if (matchedItemId != null) {
-                            fetchMatchedItemDetails(matchedItemId, matchScore, type)
-                        }
-                    }
+                    checkCompletion()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(this@ItemDetailsActivity, "Failed to load matches", Toast.LENGTH_SHORT).show()
+                    checkCompletion()
+                }
+            })
+
+        // Query matches where the report is the matched item
+        database.child("matches").orderByChild("matchedItemId").equalTo(itemId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        matchesFound = true
+                        for (itemSnapshot in snapshot.children) {
+                            val submittedItemId = itemSnapshot.child("submittedItemId").getValue(String::class.java)
+                            val matchScore = itemSnapshot.child("score").getValue(Int::class.java) ?: 0
+                            if (submittedItemId != null) {
+                                fetchMatchedItemDetails(submittedItemId, matchScore, type)
+                            }
+                        }
+                    }
+                    checkCompletion()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@ItemDetailsActivity, "Failed to load matches", Toast.LENGTH_SHORT).show()
+                    checkCompletion()
                 }
             })
     }
@@ -151,7 +186,7 @@ class ItemDetailsActivity : AppCompatActivity() {
                     )
 
                     val itemButton = Button(this@ItemDetailsActivity).apply {
-                        text = "${itemName}\n${itemDate}\nMatch Score:${score}"
+                        text = "${itemName}\n${itemDate}\nMatch Score: ${score}"
                         background = ContextCompat.getDrawable(this@ItemDetailsActivity, R.drawable.rounded_button)
                         setTextColor(resources.getColor(android.R.color.white))
                         textSize = 16f

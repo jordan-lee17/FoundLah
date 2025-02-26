@@ -156,22 +156,20 @@ class OngoingActivity : AppCompatActivity() {
 
                 AlertDialog.Builder(this@OngoingActivity)
                     .setTitle("Delete report")
-                    .setMessage("Are you sure you want to delete this report?")
+                    .setMessage("Are you sure you want to delete this report and all associated matches?")
                     .setPositiveButton("Delete") { _, _ ->
                         if (itemId != null) {
-                            database.child(databasePath).child(itemId).removeValue()
-                                .addOnSuccessListener {
-                                    Toast.makeText(this@OngoingActivity, "Report deleted", Toast.LENGTH_SHORT).show()
+                            deleteItemAndMatches(itemId, databasePath) { success ->
+                                if (success) {
+                                    Toast.makeText(this@OngoingActivity, "Report and matches deleted", Toast.LENGTH_SHORT).show()
                                     itemList.removeAt(position)
                                     adapter.notifyItemRemoved(position)
-                                    if (itemList.isEmpty()) {
-                                        itemList.add(null to null)
-                                    }
                                     updateOngoingCount()
-                                }
-                                .addOnFailureListener {
+                                } else {
                                     Toast.makeText(this@OngoingActivity, "Failed to delete report", Toast.LENGTH_SHORT).show()
+                                    adapter.notifyItemChanged(position)
                                 }
+                            }
                         }
                     }
                     .setNegativeButton("Cancel") { _, _ ->
@@ -181,5 +179,75 @@ class OngoingActivity : AppCompatActivity() {
             }
         })
         itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun deleteItemAndMatches(itemId: String, databasePath: String, callback: (Boolean) -> Unit) {
+        val matchesRef = database.child("matches")
+
+        // Delete report
+        database.child(databasePath).child(itemId).removeValue()
+            .addOnSuccessListener {
+                var tasksCompleted = 0
+                var isSuccess = true
+
+                // Check if both deletions are done
+                fun checkCompletion() {
+                    tasksCompleted++
+                    if (tasksCompleted == 2) {
+                        callback(isSuccess)
+                    }
+                }
+
+                // Delete matches where item is submittedItemId
+                matchesRef.orderByChild("submittedItemId").equalTo(itemId)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val updates = mutableMapOf<String, Any?>()
+                            for (match in snapshot.children) {
+                                updates[match.key!!] = null
+                            }
+                            matchesRef.updateChildren(updates)
+                                .addOnSuccessListener {
+                                    checkCompletion()
+                                }
+                                .addOnFailureListener {
+                                    isSuccess = false
+                                    checkCompletion()
+                                }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            isSuccess = false
+                            checkCompletion()
+                        }
+                    })
+
+                // Delete matches where item is matchedItemId
+                matchesRef.orderByChild("matchedItemId").equalTo(itemId)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val updates = mutableMapOf<String, Any?>()
+                            for (match in snapshot.children) {
+                                updates[match.key!!] = null
+                            }
+                            matchesRef.updateChildren(updates)
+                                .addOnSuccessListener {
+                                    checkCompletion()
+                                }
+                                .addOnFailureListener {
+                                    isSuccess = false
+                                    checkCompletion()
+                                }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            isSuccess = false
+                            checkCompletion()
+                        }
+                    })
+            }
+            .addOnFailureListener {
+                callback(false)
+            }
     }
 }

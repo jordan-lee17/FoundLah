@@ -34,19 +34,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/alerts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Alerts:"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="40dp"
-                app:layout_constraintHorizontal_bias="0.12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ongoing"/>
-
-            <TextView
                 android:id="@+id/ongoing_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,20 +47,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/alerts_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="420"
-                android:textColor="#ff4534"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toEndOf="@+id/alerts"
-                app:layout_constraintTop_toBottomOf="@id/ongoing_no"
-                app:layout_constraintVertical_bias="0.081" />
-
-            <TextView
                 android:id="@+id/lost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +56,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="40dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/alerts" />
+                app:layout_constraintTop_toBottomOf="@+id/ongoing" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lostItemContainer"
