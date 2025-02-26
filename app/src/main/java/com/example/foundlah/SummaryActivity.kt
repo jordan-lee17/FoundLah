@@ -1,5 +1,7 @@
 package com.example.foundlah
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.util.Base64
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -36,8 +39,10 @@ class SummaryActivity : ComponentActivity() {
     private lateinit var imagePreview: ImageView
     private lateinit var noImageText: TextView
     private lateinit var frameLayout: FrameLayout
-    private lateinit var summaryHeader: TextView
     private lateinit var formType: String
+    private lateinit var summaryTextView: TextView
+    private lateinit var detailsContainer: View
+    private lateinit var photoTextView: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,13 +54,17 @@ class SummaryActivity : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        summaryTextView = findViewById(R.id.summaryTextView)
+        detailsContainer = findViewById(R.id.detailsContainer)
+        photoTextView = findViewById(R.id.photoTextView)
+
         // Initialise realtime database
         database = FirebaseDatabase.getInstance("https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
 
         imagePreview = findViewById(R.id.imagePreview)
         noImageText = findViewById(R.id.noImageText)
         frameLayout = findViewById(R.id.frameLayout2)
-        summaryHeader = findViewById(R.id.summaryTextView)
 
         val name = findViewById<TextView>(R.id.itemTextView)
         var category = findViewById<TextView>(R.id.categoryTextView)
@@ -67,7 +76,7 @@ class SummaryActivity : ComponentActivity() {
 
         if (itemData != null) {
             formType = itemData.type.toString()
-            summaryHeader.text = "Summary of ${itemData.type} item"
+            summaryTextView.text = "Summary of ${itemData.type} item"
             name.text = "Item: ${itemData.name}"
             category.text = "Category: ${itemData.category}"
             date.text = "Date: ${itemData.date}"
@@ -102,6 +111,31 @@ class SummaryActivity : ComponentActivity() {
                 uploadToFirebase(itemData)
             }
         }
+
+        summaryTextView.alpha = 0f
+        detailsContainer.alpha = 0f
+        photoTextView.alpha = 0f
+        frameLayout.alpha = 0f
+
+        playFadeInAnimations()
+    }
+
+    private fun playFadeInAnimations() {
+        fun fadeIn(view: View, delay: Long): ObjectAnimator {
+            return ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+                duration = 1000
+                startDelay = delay
+            }
+        }
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playSequentially(
+            fadeIn(summaryTextView, 500),
+            fadeIn(detailsContainer, 1000),
+            fadeIn(photoTextView, 1500),
+            fadeIn(frameLayout, 2000)
+        )
+        animatorSet.start()
     }
 
     private fun uploadToFirebase(item: ItemData) {

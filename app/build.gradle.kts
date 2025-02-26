@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
+    implementation("com.airbnb.android:lottie:6.0.0")
     implementation(libs.google.auth)
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.volley)
