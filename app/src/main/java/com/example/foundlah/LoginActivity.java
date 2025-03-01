@@ -64,24 +64,4 @@ public class LoginActivity extends ComponentActivity {
                 });
     }
 
-
-   /* private void test(){
-        Intent intent = new Intent(this, TestActivity.class);
-        startActivity(intent);
-    }
-
-    private void registerUser(){
-        String email = emailField.getText().toString();
-        String password = passwordField.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }*/
 }
