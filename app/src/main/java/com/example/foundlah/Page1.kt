@@ -19,7 +19,7 @@ class Page1 : ComponentActivity() {
             insets
         }
 
-        val loginButton: Button = findViewById<Button>(R.id.button)
+        val loginButton: Button = findViewById<Button>(R.id.btnLogin)
 
         loginButton.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)

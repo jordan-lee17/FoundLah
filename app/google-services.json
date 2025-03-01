@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "773696736595",
+    "firebase_url": "https://foundlah-31344-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "foundlah-31344",
+    "storage_bucket": "foundlah-31344.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773696736595:android:957415073a1418bf39a5a6",
+        "android_client_info": {
+          "package_name": "com.example.foundlah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTjuO32s7nlU1ricODsuNcqrjSij-lwOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
