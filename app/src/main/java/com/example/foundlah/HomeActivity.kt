@@ -42,14 +42,17 @@ class HomeActivity : ComponentActivity() {
         welcomeText.alpha = 0f
         welcomeText.visibility = View.VISIBLE
 
+        // This ensures button exists & is clickable
         lostButton.alpha = 0f
-        lostButton.visibility = View.VISIBLE  // ✅ This ensures button exists & is clickable
+        lostButton.visibility = View.VISIBLE
 
+        // Ensures it is there
         foundButton.alpha = 0f
-        foundButton.visibility = View.VISIBLE  // ✅ Ensures it is there
+        foundButton.visibility = View.VISIBLE
+
 
         ongoingButton.alpha = 0f
-        ongoingButton.visibility = View.VISIBLE  // ✅ Ensures it is there
+        ongoingButton.visibility = View.VISIBLE
 
         // Play Lottie Animation
         lottieAnimation.playAnimation()
@@ -57,8 +60,10 @@ class HomeActivity : ComponentActivity() {
         // Fade-in animation function
         fun fadeInView(view: View, startDelay: Long): ObjectAnimator {
             return ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f).apply {
-                duration = 800  // Smooth fade-in
-                this.startDelay = startDelay  // Properly apply the delay
+                // Smooth fade-in
+                duration = 800
+                // Properly apply the delay
+                this.startDelay = startDelay
             }
         }
 
