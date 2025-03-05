@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoundLah"
         tools:targetApi="31">
+
         <activity
             android:name=".MatchedItemDetailsActivity"
             android:exported="false" />
@@ -29,14 +30,23 @@
             android:name=".OngoingActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ChatActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
+            android:name=".ConvoListActivity"
             android:exported="true" />
         <activity
             android:name=".Login"
+            android:exported="true" />
+        <activity
+            android:name=".AdminHomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,16 +54,10 @@
             android:name=".CreateAccountActivity"
             android:exported="true" />
         <activity
-            android:name=".ChatActivity"
-            android:exported="true" />
-        <activity
             android:name=".AdminSummaryActivity"
             android:exported="true" />
         <activity
             android:name=".FollowupActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ConvoListActivity"
             android:exported="true" />
         <activity
             android:name=".SummaryActivity"

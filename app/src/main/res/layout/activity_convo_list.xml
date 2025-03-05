@@ -75,57 +75,11 @@
         app:layout_constraintTop_toBottomOf="@+id/disputes"
         app:layout_constraintVertical_bias="0.027" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="336dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="36dp"
-        android:background="#1e1e1e"
-        android:text="Water Bottle MKII"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lost" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="336dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="68dp"
-        android:background="#1e1e1e"
-        android:text="Water Bottle MKII"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="336dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="56dp"
-        android:background="#1e1e1e"
-        android:text="Water Bottle MKII"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="336dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="60dp"
-        android:background="#1e1e1e"
-        android:text="Water Bottle MKII"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button9"
-        app:layout_constraintVertical_bias="0.0" />
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recyclerView"
+       android:layout_width="match_parent"
+       android:layout_height="538dp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       tools:layout_editor_absoluteX="0dp"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

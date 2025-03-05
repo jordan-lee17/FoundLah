@@ -19,11 +19,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    packagingOptions {
-        resources.excludes.add("META-INF/INDEX.LIST")
-        resources.excludes.add("META-INF/DEPENDENCIES")
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -65,14 +60,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.auth)
-    implementation("com.airbnb.android:lottie:6.0.0")
-    implementation(libs.google.auth)
-    implementation(libs.firebase.messaging.ktx)
-    implementation(libs.volley)
-    implementation(libs.firebase.messaging)
-    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,4 +68,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation("com.google.firebase:firebase-auth:21.0.1")
+    implementation("com.google.firebase:firebase-firestore:24.0.0")
+    implementation("com.google.firebase:firebase-database:20.0.4")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }
