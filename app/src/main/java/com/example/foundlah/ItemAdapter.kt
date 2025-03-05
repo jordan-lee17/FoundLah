@@ -120,7 +120,7 @@ class ItemAdapter(
             })
     }
 
-    // ADDED METHOD: Update the list when items are removed
+    // Update the list when items removed
     fun updateList(newList: List<Pair<String?, ItemData?>>) {
         itemList.clear()
 
@@ -134,7 +134,7 @@ class ItemAdapter(
         notifyDataSetChanged()
     }
 
-    // ADDED METHOD: Remove an item and show empty state if needed
+    // Remove item and show empty state 
     fun removeItem(position: Int) {
         if (position < 0 || position >= itemList.size) return
 
