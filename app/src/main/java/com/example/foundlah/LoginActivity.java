@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends ComponentActivity {
 
@@ -47,21 +48,42 @@ public class LoginActivity extends ComponentActivity {
         //btnTest.setOnClickListener(v -> test());
     }
 
-    private void loginUser(){
+    private void loginUser() {
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, AdminHomeActivity.class));
-                    }
-                    else{
+                        if (user != null) {
+                            checkUserRole(user.getUid());
+                        }
+                    } else {
                         Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void checkUserRole(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String role = documentSnapshot.getString("role");
+                        startActivity(new Intent(this, AdminHomeActivity.class));
+                        if ("admin".equals(role)) {
+                            startActivity(new Intent(this, AdminHomeActivity.class));
+                        }
+
+                        else {
+                            startActivity(new Intent(this, UserHomeActivity.class)); // Regular user screen
+                        }
+                    } else {
+                        Toast.makeText(this, "User role not found!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to fetch user role", Toast.LENGTH_SHORT).show());
     }
 
 }
