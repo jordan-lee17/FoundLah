@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends ComponentActivity {
 
@@ -73,7 +77,7 @@ public class LoginActivity extends ComponentActivity {
                         String role = documentSnapshot.getString("role");
                         startActivity(new Intent(this, AdminHomeActivity.class));
                         if ("admin".equals(role)) {
-                            startActivity(new Intent(this, AdminHomeActivity.class));
+                            startActivity(new Intent(this, AdminHomeActivity.class)); // admin screen
                         }
 
                         else {
