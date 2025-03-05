@@ -40,6 +40,9 @@
             android:name=".Login"
             android:exported="true" />
         <activity
+            android:name=".HomeActivity"
+            android:exported="true" />
+        <activity
             android:name=".AdminHomeActivity"
             android:exported="true" />
         <activity

@@ -38,8 +38,11 @@ class MatchedItemDetailsActivity : AppCompatActivity() {
             description.text = "Description: ${itemData.description}"
         }
 
-        val backButton = findViewById<Button>(R.id.backButton)
+        val backButton = findViewById<Button>(R.id.button5)
         backButton.setOnClickListener {
+
+            backButton.setBackgroundColor(Color.GRAY)
+            backButton.text = "Going Back .."
             finish()
         }
 

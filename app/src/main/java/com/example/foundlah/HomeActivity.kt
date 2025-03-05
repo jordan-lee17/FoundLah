@@ -65,10 +65,10 @@ class HomeActivity : ComponentActivity() {
         // **Create a smooth animation sequence**
         val animatorSet = AnimatorSet()
         animatorSet.playSequentially(
-            fadeInView(welcomeText, 500),     // Welcome text appears first
-            fadeInView(lostButton, 500),      // Lost button appears after text
-            fadeInView(foundButton, 500),     // Found button appears after Lost
-            fadeInView(ongoingButton, 500)    // Ongoing button appears last
+            fadeInView(welcomeText, 200),     // Welcome text appears first
+            fadeInView(lostButton, 200),      // Lost button appears after text
+            fadeInView(foundButton, 200),     // Found button appears after Lost
+            fadeInView(ongoingButton, 200)    // Ongoing button appears last
         )
         animatorSet.start()
 

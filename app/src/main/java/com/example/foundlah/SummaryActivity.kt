@@ -35,7 +35,6 @@ import java.util.Locale
 
 class SummaryActivity : ComponentActivity() {
     private lateinit var database: DatabaseReference
-
     private lateinit var imagePreview: ImageView
     private lateinit var noImageText: TextView
     private lateinit var frameLayout: FrameLayout

@@ -30,7 +30,7 @@ class Login : ComponentActivity() {
 
         emailField = findViewById(R.id.editTextTextEmailAddress)
         passwordField = findViewById(R.id.editTextTextPassword)
-        val loginButton = findViewById<Button>(R.id.button)
+        val loginButton = findViewById<Button>(R.id.btnLogin)
         val createAccount = findViewById<TextView>(R.id.textCreateAccount)
 
         loginButton.setOnClickListener {

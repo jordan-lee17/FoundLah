@@ -20,6 +20,11 @@ navigationUiKtx = "2.6.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseFirestore = "25.1.2"
 firebaseAuth = "23.2.0"
+firebaseMessagingKtx = "24.1.0"
+volley = "1.2.1"
+firebaseDatabase = "21.0.0"
+firebaseMessaging = "24.1.0"
+firebaseAnalytics = "22.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,6 +52,12 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+google-auth = { module = "com.google.auth:google-auth-library-oauth2-http", version = "1.23.0" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

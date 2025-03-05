@@ -116,9 +116,6 @@ public class ConvoListActivity extends ComponentActivity {
                 });
             }
         });
-        /*Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra("otherUserEmail", otherUserEmail);
-        startActivity(intent);*/
     }
 
 
