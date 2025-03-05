@@ -112,11 +112,12 @@ class OngoingActivity : AppCompatActivity() {
                     foundItemsList.clear()
                     if(!snapshot.exists()) {
                         foundItemsList.add(null to null)
-                    }
-                    for (itemSnapshot in snapshot.children) {
-                        val item = itemSnapshot.getValue(ItemData::class.java)
-                        if (item != null) {
-                            foundItemsList.add(itemSnapshot.key!! to item)
+                    } else {
+                        for (itemSnapshot in snapshot.children) {
+                            val item = itemSnapshot.getValue(ItemData::class.java)
+                            if (item != null) {
+                                foundItemsList.add(itemSnapshot.key!! to item)
+                            }
                         }
                     }
                     foundAdapter.notifyDataSetChanged()
@@ -152,6 +153,15 @@ class OngoingActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
+
+                // Check if this is the empty view holder
+                if (position >= 0 && position < itemList.size &&
+                    itemList[position].first == null && itemList[position].second == null) {
+                    // Don't allow swiping the empty state
+                    adapter.notifyItemChanged(position)
+                    return
+                }
+
                 val (itemId, _) = itemList[position]
 
                 AlertDialog.Builder(this@OngoingActivity)
@@ -162,8 +172,17 @@ class OngoingActivity : AppCompatActivity() {
                             deleteItemAndMatches(itemId, databasePath) { success ->
                                 if (success) {
                                     Toast.makeText(this@OngoingActivity, "Report and matches deleted", Toast.LENGTH_SHORT).show()
+                                    // Remove the item from the list
                                     itemList.removeAt(position)
-                                    adapter.notifyItemRemoved(position)
+
+                                    // If the list is now empty, add the empty placeholder
+                                    if (itemList.isEmpty()) {
+                                        itemList.add(Pair(null, null))
+                                        adapter.notifyDataSetChanged()
+                                    } else {
+                                        adapter.notifyItemRemoved(position)
+                                    }
+
                                     updateOngoingCount()
                                 } else {
                                     Toast.makeText(this@OngoingActivity, "Failed to delete report", Toast.LENGTH_SHORT).show()
