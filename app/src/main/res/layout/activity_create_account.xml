@@ -22,9 +22,12 @@
 
             <ImageView
                 android:id="@+id/imageLogo"
-                android:layout_width="241dp"
-                android:layout_height="236dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="250dp"
                 android:layout_marginTop="50dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/app_logo_description"
                 android:src="@drawable/icon2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,13 +40,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="80dp"
                 android:background="@color/semi_transparent2"
                 android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageLogo">
+                app:layout_constraintTop_toBottomOf="@+id/imageLogo"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,8 +61,8 @@
 
                 <EditText
                     android:id="@+id/editTextTextEmailAddress"
-                    android:layout_width="281dp"
-                    android:layout_height="58dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:autofillHints="emailAddress"
                     android:ems="10"
@@ -80,8 +85,8 @@
 
                 <EditText
                     android:id="@+id/editTextTextPassword"
-                    android:layout_width="283dp"
-                    android:layout_height="58dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:autofillHints="password"
                     android:ems="10"
@@ -104,8 +109,8 @@
 
                 <EditText
                     android:id="@+id/confirmPassword"
-                    android:layout_width="283dp"
-                    android:layout_height="58dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:autofillHints="password"
                     android:ems="10"
@@ -119,7 +124,7 @@
 
                 <Button
                     android:id="@+id/button"
-                    android:layout_width="285dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Create Account"
                     app:layout_constraintBottom_toBottomOf="parent"

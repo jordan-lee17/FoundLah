@@ -1,5 +1,6 @@
 package com.example.foundlah
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -19,6 +20,7 @@ import java.util.Arrays
 
 class MatchedItemDetailsActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,15 +49,13 @@ class MatchedItemDetailsActivity : AppCompatActivity() {
             description.text = "Description: ${itemData.description}"
         }
 
-        val backButton = findViewById<Button>(R.id.button5)
+        val backButton = findViewById<Button>(R.id.backButton)
         backButton.setOnClickListener {
-
             backButton.setBackgroundColor(Color.GRAY)
             backButton.text = "Going Back .."
             finish()
         }
-
-        val chatButton = findViewById<Button>(R.id.button3)
+        val chatButton = findViewById<Button>(R.id.chatButton)
         chatButton.setOnClickListener {
             getUserEmail(matchedUserId) { matchedUseremail ->
                 if (matchedUseremail != null) {

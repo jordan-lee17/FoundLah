@@ -40,8 +40,6 @@ class Login : ComponentActivity() {
         passwordField = findViewById(R.id.editTextTextPassword)
         val loginButton = findViewById<Button>(R.id.btnLogin)
         val createAccount = findViewById<TextView>(R.id.textCreateAccount)
-        val background = findViewById<ImageView>(R.id.backgroundImage)
-        animateBackground(background)
 
         loginButton.setOnClickListener {
             val email = emailField.text.toString().trim()
@@ -88,37 +86,6 @@ class Login : ComponentActivity() {
                     Toast.makeText(this, "Invalid login details", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-
-    //animate background
-    private fun animateBackground(background: ImageView) {
-        val scaleAnimatorX = ObjectAnimator.ofFloat(background, "scaleX", 1.0f, 1.1f).apply {
-            duration = 15000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-            interpolator = LinearInterpolator()
-        }
-
-        val scaleAnimatorY = ObjectAnimator.ofFloat(background, "scaleY", 1.0f, 1.1f).apply {
-            duration = 15000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-            interpolator = LinearInterpolator()
-        }
-
-        val translateAnimator =
-            ObjectAnimator.ofFloat(background, "translationY", 0f, -100f).apply {
-                duration = 15000
-                repeatCount = ObjectAnimator.INFINITE
-                repeatMode = ObjectAnimator.REVERSE
-                interpolator = LinearInterpolator()
-            }
-
-        // Start animations together
-        AnimatorSet().apply {
-            playTogether(scaleAnimatorX, scaleAnimatorY, translateAnimator)
-            start()
-        }
     }
 
     private fun checkUserRole(userId: String, email: String) {

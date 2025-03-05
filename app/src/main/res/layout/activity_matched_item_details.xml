@@ -9,7 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:fillViewport="true"
         tools:context=".MatchedItemDetailsActivity">
@@ -17,23 +17,35 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/skybackground"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="-131dp">
 
-            <LinearLayout
-                android:id="@id/detailsContainer"
-                android:layout_width="369dp"
-                android:layout_height="271dp"
-                android:background="@color/semi_transparent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="Matched Item Details"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.121">
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:id="@id/detailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/semi_transparent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header">
 
                 <TextView
                     android:id="@+id/itemTextView"
@@ -46,7 +58,6 @@
                     android:textColor="#FFFFFF"
                     android:textSize="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +72,6 @@
                     android:textColor="#FFFFFF"
                     android:textSize="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.151"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemTextView" />
 
@@ -76,7 +86,6 @@
                     android:textColor="#FFFFFF"
                     android:textSize="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.13"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/categoryTextView" />
 
@@ -91,7 +100,6 @@
                     android:textColor="#FFFFFF"
                     android:textSize="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.149"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
@@ -101,96 +109,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginBottom="20dp"
                     android:paddingRight="20dp"
                     android:text="Description:"
                     android:textColor="#FFFFFF"
                     android:textSize="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.149"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
-
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/photoTextView"
-                android:layout_width="376dp"
-                android:layout_height="32dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="356dp"
-                android:text="Photo:"
-                android:textColor="#FFFFFF"
-                android:textSize="25dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.4"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <FrameLayout
-                android:id="@+id/frameLayout2"
-                android:layout_width="255dp"
-                android:layout_height="58dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="520dp"
-                android:background="#ffffff"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/photoTextView">
-
-                <ImageView
-                    android:id="@+id/imagePreview"
-                    android:layout_width="209dp"
-                    android:layout_height="84dp"
-                    android:contentDescription="Image Preview"
-                    android:scaleType="centerCrop"
-                    tools:src="@tools:sample/avatars" />
-
-            </FrameLayout>
-
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/chatButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chat with user"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.868" />
-
-            <TextView
-                android:id="@+id/noImageText"
-                android:layout_width="314dp"
-                android:layout_height="31dp"
-                android:gravity="center"
-                android:text="No image uploaded"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.644" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="0dp"
-                android:layout_height="51dp"
-                android:backgroundTint="#000000"
-                android:text="Back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button3"
-                app:layout_constraintVertical_bias="1.0" />
-
+                app:layout_constraintTop_toBottomOf="@id/detailsContainer"
+                app:layout_constraintVertical_bias="0.7" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="horizontal">
 
-
-
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:text="Back"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>
