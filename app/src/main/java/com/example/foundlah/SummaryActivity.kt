@@ -30,6 +30,7 @@ import kotlin.math.min
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -42,6 +43,7 @@ class SummaryActivity : ComponentActivity() {
     private lateinit var summaryTextView: TextView
     private lateinit var detailsContainer: View
     private lateinit var photoTextView: TextView
+    private lateinit var auth: FirebaseAuth
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +55,7 @@ class SummaryActivity : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        auth = FirebaseAuth.getInstance()
 
         summaryTextView = findViewById(R.id.summaryTextView)
         detailsContainer = findViewById(R.id.detailsContainer)
@@ -139,7 +142,7 @@ class SummaryActivity : ComponentActivity() {
 
     private fun uploadToFirebase(item: ItemData) {
         // Get userID
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val userId = auth.currentUser?.uid
 
         // Generate unique ID
         val itemId = database.child("${formType} items").push().key
@@ -286,11 +289,14 @@ class SummaryActivity : ComponentActivity() {
         val matchId = database.child("matches").push().key
         val userMatchCount = mutableMapOf<String, Int>()
 
+        val submittedUserId = auth.currentUser?.uid
+
         for ((userId, itemId, score) in matches) {
             val matchData = mapOf(
                 "submittedItemId" to submittedItemId,
                 "matchedItemId" to itemId,
                 "matchedUserId" to userId,
+                "submittedUserId" to submittedUserId,
                 "score" to score
             )
             if (matchId != null) {
@@ -351,11 +357,21 @@ class SummaryActivity : ComponentActivity() {
     }
 
     private fun getFCMToken(userId: String, onTokenReceived: (String?) -> Unit) {
-        database.child("users").child(userId).child("fcmToken")
-            .get().addOnSuccessListener { snapshot ->
-                val token = snapshot.getValue(String::class.java)
-                onTokenReceived(token)
-            }.addOnFailureListener {
+        val firestore = FirebaseFirestore.getInstance()
+        val userRef = firestore.collection("users").document(userId)
+
+        userRef.get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Fetch token from Firestore
+                    val token = document.getString("fcmToken")
+                    onTokenReceived(token)
+                } else {
+                    println("User document does not exist in Firestore.")
+                    onTokenReceived(null)
+                }
+            }
+            .addOnFailureListener {
                 println("Failed to fetch FCM Token: ${it.message}")
                 onTokenReceived(null)
             }

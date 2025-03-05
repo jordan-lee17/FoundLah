@@ -13,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ class HomeActivity : ComponentActivity() {
         val profileButton = findViewById<Button>(R.id.profileButton)
 
         // Get User's Name (Optional)
-        val userEmail = intent.getStringExtra("USER_EMAIL") ?: "User"
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "User"
         welcomeText.text = "Welcome $userEmail!\nHow can I help you today?"
 
         // **Ensure buttons are visible but transparent (so they remain clickable)**

@@ -119,9 +119,11 @@ class ItemDetailsActivity : AppCompatActivity() {
                         matchesFound = true
                         for (itemSnapshot in snapshot.children) {
                             val matchedItemId = itemSnapshot.child("matchedItemId").getValue(String::class.java)
+                            val matchedUserId = itemSnapshot.child("matchedUserId").getValue(String::class.java)
+                            val submittedUserId = itemSnapshot.child("submittedUserId").getValue(String::class.java)
                             val matchScore = itemSnapshot.child("score").getValue(Int::class.java) ?: 0
                             if (matchedItemId != null) {
-                                fetchMatchedItemDetails(matchedItemId, matchScore, type)
+                                fetchMatchedItemDetails(matchedItemId,matchedUserId, submittedUserId, matchScore, type)
                             }
                         }
                     }
@@ -142,9 +144,11 @@ class ItemDetailsActivity : AppCompatActivity() {
                         matchesFound = true
                         for (itemSnapshot in snapshot.children) {
                             val submittedItemId = itemSnapshot.child("submittedItemId").getValue(String::class.java)
+                            val matchedUserId = itemSnapshot.child("matchedUserId").getValue(String::class.java)
+                            val submittedUserId = itemSnapshot.child("submittedUserId").getValue(String::class.java)
                             val matchScore = itemSnapshot.child("score").getValue(Int::class.java) ?: 0
                             if (submittedItemId != null) {
-                                fetchMatchedItemDetails(submittedItemId, matchScore, type)
+                                fetchMatchedItemDetails(submittedItemId, matchedUserId, submittedUserId, matchScore, type)
                             }
                         }
                     }
@@ -158,7 +162,7 @@ class ItemDetailsActivity : AppCompatActivity() {
             })
     }
 
-    private fun fetchMatchedItemDetails(matchedItemId: String, score: Int, type: String?) {
+    private fun fetchMatchedItemDetails(matchedItemId: String, matchedUserId: String?, submittedUserId: String?, score: Int, type: String?) {
         var oppositeType: String
         if (type == "found") {
             oppositeType = "lost"
@@ -199,6 +203,8 @@ class ItemDetailsActivity : AppCompatActivity() {
                         setOnClickListener {
                             val intent = Intent(this@ItemDetailsActivity, MatchedItemDetailsActivity::class.java)
                             intent.putExtra("itemData", itemData)
+                            intent.putExtra("matchedUserId", matchedUserId)
+                            intent.putExtra("submittedUserId", submittedUserId)
                             startActivity(intent)
                         }
                     }

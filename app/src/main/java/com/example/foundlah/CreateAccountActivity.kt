@@ -2,6 +2,7 @@ package com.example.foundlah
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
@@ -11,6 +12,8 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class CreateAccountActivity : ComponentActivity() {
@@ -79,6 +82,21 @@ class CreateAccountActivity : ComponentActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    val user: FirebaseUser? = auth.currentUser
+                    user?.let {
+                        val db = FirebaseFirestore.getInstance()
+                        val userData = hashMapOf(
+                            "email" to email,
+                            "role" to "user"
+                        )
+                        db.collection("users").document(user.uid).set(userData)
+                            .addOnSuccessListener {
+                                Log.d("Register", "User data stored")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Register", "Error storing user data", e)
+                            }
+                    }
                     Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, Login::class.java))
                     finish()
