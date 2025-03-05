@@ -1,5 +1,6 @@
 package com.example.foundlah;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class AdminHomeActivity extends ComponentActivity {
 
-    private Button btnTrack;
+    private Button btnTrack, btnChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,17 @@ public class AdminHomeActivity extends ComponentActivity {
 
         btnTrack = findViewById(R.id.btnTrackConvos);
         btnTrack.setOnClickListener(v -> trackConvos());
+
+        btnChat = findViewById(R.id.btnChat);
+        btnChat.setOnClickListener(v -> trackChats());
     }
 
     private void trackConvos(){
+        Intent intent = new Intent(this, AdminConvoListActivity.class);
+        startActivity(intent);
+    }
+
+    private void trackChats(){
         Intent intent = new Intent(this, ConvoListActivity.class);
         startActivity(intent);
     }

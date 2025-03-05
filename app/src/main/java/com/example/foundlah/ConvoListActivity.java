@@ -33,7 +33,6 @@ public class ConvoListActivity extends ComponentActivity {
     private UserAdapter userAdapter;
     private List<User> userList = new ArrayList<>();
     private FirebaseAuth auth;
-
     private FirebaseFirestore db;
 
     @Override
@@ -65,7 +64,7 @@ public class ConvoListActivity extends ComponentActivity {
     private void loadUsers() {
         String currentUserEmail = auth.getCurrentUser().getEmail();
 
-        // Get users from Firestore (or Firebase Auth if using backend)
+        // Get users from Firestore
         FirebaseFirestore.getInstance().collection("users").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     userList.clear();
